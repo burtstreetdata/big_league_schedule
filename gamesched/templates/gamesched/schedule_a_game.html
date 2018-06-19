@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<HTML>
+  <HEAD>
+    <title>Schedule a game</title>
+    <link rel="stylesheet" href="{% static  'gamesched/style.css' %}">
+</HEAD>
+<BODY>
+<h2>Home Team</h2>
+  <div>
+
+    {% for team in teams %}
+  <input type='radio' id='h_{{team.id}}' name='home' value='{{team.id}}'>
+  <label for='h_{{team.id}}'>{{team.name}}</label>
+  {% endfor  %}
+  </div>
+<h2>Away Team</h2>
+  <div>
+
+    {% for team in teams %}
+  <input type='radio' id='a_{{team.id}}' name='away' value='{{team.id}}'>
+  <label for='a_{{team.id}}'>{{team.name}}</label>
+  {% endfor  %}
+  </div>
+
+</BODY>
+</HTML>

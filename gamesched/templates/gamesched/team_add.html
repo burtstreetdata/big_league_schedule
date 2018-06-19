@@ -1,0 +1,15 @@
+<P>Please to add a team</P>
+
+<form action = "{% url 'gamesched:team_add_form' %}" method= "post">
+  {% csrf_token  %}
+  <label for="team_name">New team:</label>
+  Team name <input id="teamname" type="text" name="teamname"><br>
+  <input type = "submit" value="Add Team">
+  <P>Current teams -- context here is  the Teamlist</P>
+  <ul>
+    {% for team in teams %}
+    <li>{{team.name}}</li>
+    {% endfor  %}
+  </ul>
+</form>
+  

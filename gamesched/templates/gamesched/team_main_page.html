@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<HTML>
+  <HEAD>
+    <title>Calling all girls</title>
+    <link rel="stylesheet" href="{% static  'gamesched/style.css' %}">
+</HEAD>
+<BODY>
+  <H1>Rocking in the Cree World</H1>
+  <P>Ici, it is the team page</P>
+
+<a href = "{% url 'gamesched:team_add' %}">Add a Team</a>
+</BODY>
+</HTML>
