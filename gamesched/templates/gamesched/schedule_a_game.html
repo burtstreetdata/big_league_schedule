@@ -6,9 +6,14 @@
     <link rel="stylesheet" href="{% static  'gamesched/style.css' %}">
 </HEAD>
 <BODY>
-<h2>Home Team</h2>
-  <div>
 
+
+  <form action = "{% url 'gamesched:process_team_schedule_a_game' %}" method= "post">
+    {% csrf_token  %}
+
+  <h2>Home Team</h2>
+  Game Date: <input type='date' name='gamedate'>
+  <div>
     {% for team in teams %}
   <input type='radio' id='h_{{team.id}}' name='home' value='{{team.id}}'>
   <label for='h_{{team.id}}'>{{team.name}}</label>
@@ -16,12 +21,12 @@
   </div>
 <h2>Away Team</h2>
   <div>
-
     {% for team in teams %}
   <input type='radio' id='a_{{team.id}}' name='away' value='{{team.id}}'>
   <label for='a_{{team.id}}'>{{team.name}}</label>
   {% endfor  %}
   </div>
-
+  <input type = "submit" value="Schedule the game">
+</form>
 </BODY>
 </HTML>

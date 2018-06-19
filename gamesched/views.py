@@ -22,7 +22,7 @@ def team_add(request):
 
 def team_schedule_a_game(request):
    template = loader.get_template('gamesched/schedule_a_game.html')
-   return HttpResponse(template.render({'teams':Team.objects.all()}))   
+   return HttpResponse(template.render({'teams':Team.objects.all()}, request))   
 
 def team_add_form(request):
     try:
@@ -32,11 +32,20 @@ def team_add_form(request):
     else:
        newteam = Team(name=new_team_name)
        newteam.save()
-       template = loader.get_template('gamesched/team_main_page.html')
        return HttpResponseRedirect(reverse('gamesched:team_main_page'))
 
-def PROCESS_team_schedule_a_game(request):
- return HttpResponse("stub")
+def process_team_schedule_a_game(request):
+    try:
+       home_team = request.POST['home']
+       away_team = request.POST['away']
+       game_date = request.POST['gamedate']
+    except ():
+       return render(request, 'gamesched/team_add_form', {'errmsg':'couldnt get from POST'})
+    else:
+       debugtxt = f"date {game_date}, home: {home_team}, away: {away_team}"
+       template = loader.get_template('gamesched/index.html')
+       return HttpResponse(debugtxt)
+    
 
 
 
