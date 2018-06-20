@@ -1,9 +1,10 @@
-from django.shortcuts import  render
+from django.shortcuts import  render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 from django.template import loader
 from .models import Team
+from .models import ScheduledGame
 
 # Create your views here.
 
@@ -36,15 +37,26 @@ def team_add_form(request):
 
 def process_team_schedule_a_game(request):
     try:
-       home_team = request.POST['home']
-       away_team = request.POST['away']
-       game_date = request.POST['gamedate']
+       hteam = get_object_or_404(Team, pk=request.POST['home'])
+       ateam = get_object_or_404(Team, pk=request.POST['away'])
+       frm_game_date = request.POST['gamedate']
     except ():
        return render(request, 'gamesched/team_add_form', {'errmsg':'couldnt get from POST'})
     else:
-       debugtxt = f"date {game_date}, home: {home_team}, away: {away_team}"
+       sg = ScheduledGame(home_team=hteam,
+                          away_team=ateam,
+                          play_date=frm_game_date,
+                          home_score = 0,
+                          away_score= 0)
+       sg.save();
        template = loader.get_template('gamesched/index.html')
-       return HttpResponse(debugtxt)
+       return HttpResponseRedirect(reverse('gamesched:team_schedule_list'))
+
+def team_schedule_list(request):
+   template = loader.get_template('gamesched/team_schedule_list.html')
+   return HttpResponse(template.render({}, request))
+
+
     
 
 
